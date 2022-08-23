@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.ui.setupWithNavController
 import com.rungene.android.notekeeper.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,8 +26,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
+        val drawerLayout =binding.drawerLayout
+        val navView = binding.navView
+
+        //connect drawerLayout to navigation graph
+        appBarConfiguration = AppBarConfiguration(navController.graph,drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //connect navigationdrawer with navController
+        navView.setupWithNavController(navController)
 
         binding.fab.setOnClickListener {
             navController.navigate(R.id.action_FirstFragment_to_SecondFragment,null)
